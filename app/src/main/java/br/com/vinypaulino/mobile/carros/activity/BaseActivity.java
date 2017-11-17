@@ -3,6 +3,7 @@ package br.com.vinypaulino.mobile.carros.activity;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import br.com.vinypaulino.mobile.carros.R;
+import android.support.v4.app.Fragment;
+import br.com.vinypaulino.mobile.carros.fragments.CarrosFragment;
+import br.com.vinypaulino.mobile.carros.fragments.SiteLivroFragment;
 import livroandroid.lib.utils.IntentUtils;
 import livroandroid.lib.utils.NavDrawerUtil;
 
@@ -64,23 +68,23 @@ public class BaseActivity extends livroandroid.lib.activity.BaseActivity {
     private void onNavDrawerItemSelected(MenuItem menuItem){
         switch (menuItem.getItemId()){
             case R.id.nav_item_carros_todos:
-                toast("Clicou em carros");
+                replaceFragment(new CarrosFragment().newInstance(R.string.carros));
                 break;
 
             case R.id.nav_item_carros_classicos:
-                toast("Clicou em carros clássicos");
+                replaceFragment(new CarrosFragment().newInstance(R.string.classicos));
                 break;
 
             case R.id.nav_item_carros_esportivos:
-                toast("Clicou em carros esportivos");
+                replaceFragment(new CarrosFragment().newInstance(R.string.esportivos));
                 break;
 
             case R.id.nav_item_carros_luxo:
-                toast("Clicou em carros de Luxo");
+                replaceFragment(new CarrosFragment().newInstance(R.string.luxo));
                 break;
 
             case R.id.nav_item_site_livro:
-                toast("Clicou em site do Livro");
+                replaceFragment(new SiteLivroFragment());
                 break;
 
             case R.id.nav_item_settings:
@@ -89,6 +93,11 @@ public class BaseActivity extends livroandroid.lib.activity.BaseActivity {
         }
 
     }
+
+    protected void replaceFragment(Fragment frag) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,frag, "TAG").commit();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
