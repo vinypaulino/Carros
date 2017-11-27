@@ -4,16 +4,7 @@
 
     <dimen name="navDrawerPhoto_layout_width">64dp</dimen>
     <dimen name="navDrawerPhoto_layout_height">64dp</dimen>
-    <dimen name="navDrawerPhoto_layout_marginTop">16dp</dimen>
     <dimen name="navDrawerPhoto_layout_marginLeft">16dp</dimen>
-
-    <dimen name="navDrawerPhotoTwo_layout_width">40dp</dimen>
-    <dimen name="navDrawerPhotoTwo_layout_height">40dp</dimen>
-    <dimen name="navDrawerPhotoTwo_layout_marginRight">16dp</dimen>
-
-    <dimen name="navDrawerPhotoTree_layout_width">40dp</dimen>
-    <dimen name="navDrawerPhotoTree_layout_height">40dp</dimen>
-    <dimen name="navDrawerPhotoTree_layout_marginRight">16dp</dimen>
 
     <dimen name="navDrawerData_layout_height">56dp</dimen>
     <dimen name="navDrawerData_layout_marginBottom">8dp</dimen>

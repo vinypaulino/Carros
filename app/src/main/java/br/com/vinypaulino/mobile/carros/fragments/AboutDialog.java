@@ -35,7 +35,6 @@ public class AboutDialog extends DialogFragment {
         new AboutDialog().show(ft, "dialog_about");
     }
 
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 

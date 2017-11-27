@@ -1,5 +1,6 @@
 package br.com.vinypaulino.mobile.carros.activity;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +17,7 @@ import org.w3c.dom.Text;
 import br.com.vinypaulino.mobile.carros.R;
 import android.support.v4.app.Fragment;
 import br.com.vinypaulino.mobile.carros.fragments.CarrosFragment;
+import br.com.vinypaulino.mobile.carros.fragments.CarrosTabFragment;
 import br.com.vinypaulino.mobile.carros.fragments.SiteLivroFragment;
 import livroandroid.lib.utils.IntentUtils;
 import livroandroid.lib.utils.NavDrawerUtil;
@@ -30,7 +32,8 @@ public class BaseActivity extends livroandroid.lib.activity.BaseActivity {
     protected DrawerLayout drawerLayout;
 
 
-    protected void setUpToolBar() {
+    protected void setUpToolbar() {
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -65,44 +68,43 @@ public class BaseActivity extends livroandroid.lib.activity.BaseActivity {
         }
     }
     //Trata o evento do menu Lateral
-    private void onNavDrawerItemSelected(MenuItem menuItem){
-        switch (menuItem.getItemId()){
+    private void onNavDrawerItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
             case R.id.nav_item_carros_todos:
-                replaceFragment(new CarrosFragment().newInstance(R.string.carros));
+                // Nada aqui pois somente a MainActivity possui menu lateral
                 break;
-
             case R.id.nav_item_carros_classicos:
-                replaceFragment(new CarrosFragment().newInstance(R.string.classicos));
+                Intent intent = new Intent(getContext(), CarrosActivity.class);
+                intent.putExtra("tipo", R.string.classicos);
+                startActivity(intent);
                 break;
-
             case R.id.nav_item_carros_esportivos:
-                replaceFragment(new CarrosFragment().newInstance(R.string.esportivos));
+                intent = new Intent(getContext(), CarrosActivity.class);
+                intent.putExtra("tipo", R.string.esportivos);
+                startActivity(intent);
                 break;
-
             case R.id.nav_item_carros_luxo:
-                replaceFragment(new CarrosFragment().newInstance(R.string.luxo));
+                intent = new Intent(getContext(), CarrosActivity.class);
+                intent.putExtra("tipo", R.string.luxo);
+                startActivity(intent);
                 break;
-
             case R.id.nav_item_site_livro:
-                replaceFragment(new SiteLivroFragment());
+                startActivity(new Intent(getContext(), SiteLivroActivity.class));
                 break;
-
             case R.id.nav_item_settings:
-                toast("Clicou em Configurações");
+              //  startActivity(new Intent(this, ConfiguracoesActivity.class));
+                toast("Clicou em configurações");
                 break;
         }
-
     }
 
-    protected void replaceFragment(Fragment frag) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,frag, "TAG").commit();
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
-                //trata o clique nno botão que abre o menu
+                //trata o clique no botão que abre o menu
                 if (drawerLayout != null){
                     openDrawer();
                     return true;
