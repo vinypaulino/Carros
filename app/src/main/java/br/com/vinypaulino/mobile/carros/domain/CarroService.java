@@ -2,6 +2,7 @@ package br.com.vinypaulino.mobile.carros.domain;
 
 
 import android.content.Context;
+import android.os.Environment;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -19,6 +20,7 @@ import br.com.vinypaulino.mobile.carros.R;
 import livroandroid.lib.utils.FileUtils;
 import livroandroid.lib.utils.HttpHelper;
 import livroandroid.lib.utils.IOUtils;
+import livroandroid.lib.utils.SDCardUtils;
 import livroandroid.lib.utils.XMLUtils;
 import org.w3c.dom.Node;
 
@@ -34,20 +36,64 @@ public class CarroService {
     private static final String URL = "http://www.livroandroid.com.br/livro/carros/carros_{tipo}.json";
 
     public static List<Carro> getCarros(Context context, int tipo) throws IOException {
-        //String xml = readFile(context, tipo);
-        //List<Carro> carros = parserXML(context, xml);
+       List<Carro> carros = getCarrosFromArquivo(context,tipo);
+       if (carros != null && carros.size() > 0){
+           //Encontrou o arquivo
+           return carros;
+       }
+        // Se não encontrar, busca no web service
+        carros = getCarrosFromWebService(context,tipo);
+        return carros;
+    }
 
+
+    //Abre o arquivo salvo, se existir e cria a lista de carros
+    private static List<Carro> getCarrosFromArquivo(Context context, int tipo) throws IOException{
+        String tipoString = getTipo(tipo);
+        String fileName = String.format("carros_%s.json", tipoString);
+        Log.d(TAG, "Abrindo arquivo " + fileName);
+        //Lê o arquivo da memória interna
+        String json = FileUtils.readFile(context,fileName,"UTF-8");
+        if(json == null){
+            Log.d(TAG,"Arquivo "+fileName+" não encontrado.");
+            return null;
+        }
+        List<Carro> carros = parserJSON(context, json);
+        Log.d(TAG,"Retornando carros do arquivo "+fileName+".");
+        return carros;
+
+    }
+
+    private static List<Carro> getCarrosFromWebService(Context context, int tipo) throws IOException {
         String tipoString = getTipo(tipo);
         String url = URL.replace("{tipo}", tipoString);
-        //Faz a requisição HTTP no servidor e retorna a string com o conteúdo
+        Log.d(TAG,"URL: " + url);
         HttpHelper http = new HttpHelper();
-
-
         String json = http.doGet(url);
         List<Carro> carros = parserJSON(context, json);
-        //No final deste método vamos salvar o texto do JSON em arquivo
-        salvarArquivoNaMemoriaInterna(context, url, json);
+        salvaArquivoNaMemoriaInterna(context, url, json);
         return carros;
+    }
+
+    private static void salvaArquivoNaMemoriaInterna(Context context, String url, String json) {
+        String fileName = url.substring(url.lastIndexOf("/") + 1);
+        File f = FileUtils.getFile(context, fileName);
+        IOUtils.writeString(f, json);
+        Log.d(TAG, "Arquivo salvo: " + f);
+
+    }
+
+
+    private static void salvarArquivoNaMemoriaExterna(Context context, String url, String json) {
+        String fileName = url.substring(url.lastIndexOf("/")+1);
+        //Cria um arquivo privado
+        File f = SDCardUtils.getPrivateFile(context, fileName, Environment.DIRECTORY_DOWNLOADS);
+        IOUtils.writeString(f, json);
+        Log.d(TAG, "1) Arquivo privado salvo na pasta downloads: " + f );
+        //Cria um arquivo publico
+        f = SDCardUtils.getPublicFile(fileName, Environment.DIRECTORY_DOWNLOADS);
+        IOUtils.writeString(f, json);
+        Log.d(TAG, "2) Arquivo público salvo na pasta downloads: " + f);
     }
 
     private static void salvarArquivoNaMemoriaInterna(Context context, String url, String json) {

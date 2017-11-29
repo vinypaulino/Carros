@@ -49,6 +49,7 @@ Versão %s - 1<br><br>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="error_conexao_indisponivel">Conexao Indisponivel</string>
+    <string name="msg_alerta_permissao">Para utilizar esse aplicativo, você precisa aceitar as permissões</string>
 
 
 </resources>

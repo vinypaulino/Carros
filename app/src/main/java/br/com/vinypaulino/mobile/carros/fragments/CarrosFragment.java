@@ -100,7 +100,7 @@ public class CarrosFragment extends BaseFragment {
     private class GetCarrosTask implements TaskListener<List<Carro>> {
         @Override
         public List<Carro> execute() throws Exception {
-            Thread.sleep(5000);
+             // Thread.sleep(5000);
             // Busca os carros em background (Thread)
             return CarroService.getCarros(getContext(), tipo);
         }
