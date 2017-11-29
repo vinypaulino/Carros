@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Element;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 import br.com.vinypaulino.mobile.carros.R;
 import livroandroid.lib.utils.FileUtils;
 import livroandroid.lib.utils.HttpHelper;
+import livroandroid.lib.utils.IOUtils;
 import livroandroid.lib.utils.XMLUtils;
 import org.w3c.dom.Node;
 
@@ -43,8 +45,16 @@ public class CarroService {
 
         String json = http.doGet(url);
         List<Carro> carros = parserJSON(context, json);
-
+        //No final deste método vamos salvar o texto do JSON em arquivo
+        salvarArquivoNaMemoriaInterna(context, url, json);
         return carros;
+    }
+
+    private static void salvarArquivoNaMemoriaInterna(Context context, String url, String json) {
+        String fileName = url.substring(url.lastIndexOf("/")+1);
+        File file = FileUtils.getFile(context,fileName);
+        IOUtils.writeString(file, json);
+        Log.d(TAG, "Arquivo salvo: " + file);
     }
 
     private static String getTipo(int tipo) {
