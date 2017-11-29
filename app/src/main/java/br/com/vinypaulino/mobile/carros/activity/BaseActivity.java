@@ -16,6 +16,8 @@ import org.w3c.dom.Text;
 
 import br.com.vinypaulino.mobile.carros.R;
 import android.support.v4.app.Fragment;
+
+import br.com.vinypaulino.mobile.carros.activity.prefs.ConfiguracoesActivity;
 import br.com.vinypaulino.mobile.carros.fragments.CarrosFragment;
 import br.com.vinypaulino.mobile.carros.fragments.CarrosTabFragment;
 import br.com.vinypaulino.mobile.carros.fragments.SiteLivroFragment;
@@ -92,8 +94,7 @@ public class BaseActivity extends livroandroid.lib.activity.BaseActivity {
                 startActivity(new Intent(getContext(), SiteLivroActivity.class));
                 break;
             case R.id.nav_item_settings:
-              //  startActivity(new Intent(this, ConfiguracoesActivity.class));
-                toast("Clicou em configurações");
+                startActivity(new Intent(this, ConfiguracoesActivity.class));
                 break;
         }
     }
