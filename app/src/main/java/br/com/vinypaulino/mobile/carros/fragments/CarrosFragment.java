@@ -13,11 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.otto.Subscribe;
+
 import org.parceler.Parcels;
 
 import java.io.IOException;
 import java.util.List;
 
+import br.com.vinypaulino.mobile.carros.CarrosApplication;
 import br.com.vinypaulino.mobile.carros.R;
 import br.com.vinypaulino.mobile.carros.activity.CarroActivity;
 import br.com.vinypaulino.mobile.carros.adapter.CarroAdapter;
@@ -48,6 +51,21 @@ public class CarrosFragment extends BaseFragment {
             // Lê o tipo dos argumentos.
             this.tipo = getArguments().getInt("tipo");
         }
+        //Registra a classe para receber eventos
+        CarrosApplication.getInstance().getBus().register(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //Cancela o recebimento de eventos
+        CarrosApplication.getInstance().getBus().unregister(this);
+    }
+
+    @Subscribe
+    public void onBusAtualizarListaCarros(String refresh){
+        //Recebeu o evento atualiza a lista
+        taskCarros(false);
     }
 
     @Override
@@ -93,16 +111,22 @@ public class CarrosFragment extends BaseFragment {
 
     private void taskCarros(boolean pullToRefresh) {
         // Busca os carros: Dispara a Task
-        startTask("carros", new GetCarrosTask(),pullToRefresh ? R.id.swipeToRefresh : R.id.progress);
+        startTask("carros", new GetCarrosTask(pullToRefresh),pullToRefresh ? R.id.swipeToRefresh : R.id.progress);
     }
 
     // Task para buscar os carros
     private class GetCarrosTask implements TaskListener<List<Carro>> {
+        private boolean refresh;
+        public GetCarrosTask(boolean refresh){
+            this.refresh = refresh;
+        }
         @Override
         public List<Carro> execute() throws Exception {
              // Thread.sleep(5000);
             // Busca os carros em background (Thread)
-            return CarroService.getCarros(getContext(), tipo);
+
+
+            return CarroService.getCarros(getContext(), tipo, refresh);
         }
         @Override
         public void updateView(List<Carro> carros) {
@@ -122,8 +146,6 @@ public class CarrosFragment extends BaseFragment {
         public void onCancelled(String s) {
         }
     }
-
-
 
     private CarroAdapter.CarroOnClickListener onClickCarro() {
         return new CarroAdapter.CarroOnClickListener() {

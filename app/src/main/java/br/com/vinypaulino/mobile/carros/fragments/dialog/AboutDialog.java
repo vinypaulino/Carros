@@ -1,7 +1,6 @@
-package br.com.vinypaulino.mobile.carros.fragments;
+package br.com.vinypaulino.mobile.carros.fragments.dialog;
 
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;

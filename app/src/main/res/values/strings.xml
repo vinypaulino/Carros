@@ -12,17 +12,21 @@ Versão %s - 1<br><br>
 	]]>
 	</string>
     <string name="about_dialog_title">Carros [Modelo]</string>
+    <string name="Atualizar">Atualizar</string>
 
     <!-- C -->
     <string name="carros">Carros</string>
     <string name="configuracoes">Configurações</string>
     <string name="classicos">Clássicos</string>
-
+    <string name="share">Compartilhar</string>
     <!-- D -->
     <string name="descricao">Descrição</string>
 
     <!-- E -->
     <string name="esportivos">Esportivos</string>
+    <string name="editar">Editar</string>
+    <string name="excluir">Excluir</string>
+    <string name="error_conexao_indisponivel">Conexao Indisponivel</string>
 
     <!-- L -->
     <string name="luxo">Luxo</string>
@@ -30,12 +34,14 @@ Versão %s - 1<br><br>
 
     <!-- M -->
     <string name="mapa">Mapa</string>
+    <string name="msg_alerta_permissao">Para utilizar esse aplicativo, você precisa aceitar as permissões</string>
     <!-- menu_frag_mapa.xml -->
 
 
     <!-- N -->
     <string name="nav_drawer_username">Vinícius Paulino</string>
     <string name="nav_drawer_email">vinydos3@gmail.com</string>
+    <string name="nome">Nome</string>
 
     <!-- O -->
     <string name="ok">OK</string>
@@ -46,10 +52,6 @@ Versão %s - 1<br><br>
     <!-- V -->
     <string name="vazio" />
     <string name="video">Vídeo</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="error_conexao_indisponivel">Conexao Indisponivel</string>
-    <string name="msg_alerta_permissao">Para utilizar esse aplicativo, você precisa aceitar as permissões</string>
 
 
 </resources>

@@ -11,5 +11,7 @@
     <dimen name="img_carro_adapter_height">107dp</dimen>
 
     <!-- EditarCarroDialog -->
+    <dimen name="popup_width">300dp</dimen>
+    <dimen name="popup_height">300dp</dimen>
 
 </resources>

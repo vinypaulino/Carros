@@ -3,6 +3,8 @@ package br.com.vinypaulino.mobile.carros;
 import android.app.Application;
 import android.util.Log;
 
+import com.squareup.otto.Bus;
+
 /**
  * Created by Naja on 16/11/2017.
  */
@@ -10,14 +12,16 @@ import android.util.Log;
 public class CarrosApplication extends Application {
     private static final String TAG = "CarrosApplication";
     private static CarrosApplication instance = null;
-    public static CarrosApplication getInstance(){
-        return instance; //Singleton
+    private Bus bus = new Bus();
+    public static CarrosApplication getInstance() {
+        return instance; // Singleton
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "CarrosApplication.onCreate()");
+        // Salva a instância para termos acesso como Singleton
         instance = this;
     }
 
@@ -25,5 +29,9 @@ public class CarrosApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
         Log.d(TAG, "CarrosApplication.onTerminate()");
+    }
+
+    public Bus getBus() {
+        return bus;
     }
 }

@@ -12,7 +12,7 @@ import br.com.vinypaulino.mobile.carros.R;
 import br.com.vinypaulino.mobile.carros.adapter.TabsAdapter;
 import livroandroid.lib.utils.Prefs;
 
-import static br.com.vinypaulino.mobile.carros.fragments.AboutDialog.showAbout;
+import static br.com.vinypaulino.mobile.carros.fragments.dialog.AboutDialog.showAbout;
 
 
 public class MainActivity extends BaseActivity {
